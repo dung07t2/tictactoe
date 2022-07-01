@@ -4,10 +4,10 @@
     "private": true,
     "homepage": "https://dung07t2.github.io",
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev -p 3001",
         "build": "next build",
         "export": "next export",
-        "start": "next start",
+        "start": "next start -p 3001",
         "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
         "format": "prettier --write --ignore-unknown \"src/**/*.{js,ts,tsx}\"",
         "postinstall": "husky install",
