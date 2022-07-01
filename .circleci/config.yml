@@ -1,0 +1,69 @@
+version: 2.1
+
+orbs:
+    # The Node.js orb contains a set of prepackaged CircleCI configuration you can utilize
+    # Orbs reduce the amount of configuration required for common tasks.
+    # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
+    node: circleci/node@4.7
+
+jobs:
+    build-and-test:
+        docker:
+            - image: circleci/node:16.10
+        steps:
+            - checkout
+            - node/install-packages:
+                  # If you are using yarn, change the line below from "npm" to "yarn"
+                  pkg-manager: yarn
+            - restore_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+            - run:
+                  name: Install Dependencies
+                  command: yarn install
+            - save_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+                  paths:
+                      - ./node_modules
+            - run:
+                  name: Run test
+                  command: yarn test
+            - run:
+                  name: Run build
+                  command: yarn build
+            - run:
+                  name: Run export
+                  command: yarn export
+    deploy-github-pages:
+        working_directory: ~/tictactoe-test/
+        docker:
+            - image: circleci/node:16.10
+        steps:
+            - node/install-packages:
+                  # If you are using yarn, change the line below from "npm" to "yarn"
+                  pkg-manager: yarn
+            - run:
+                  name: Run deploy
+                  command: yarn deploy
+
+workflows:
+    version: 2
+    # Below is the definition of your workflow.
+    # Inside the workflow, you provide the jobs you want to run, e.g this workflow runs the build-and-test job above.
+    # CircleCI will run this workflow on every commit.
+    # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
+    cibuild:
+        jobs:
+            - build-and-test:
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - deploy-github-pages:
+                  requires:
+                      - build-and-test
+                  filters:
+                      branches:
+                          only:
+                              - master
+            # For running simple node tests, you could optionally use the node/test job from the orb to replicate and replace the job above in fewer lines.
+            # - node/test
