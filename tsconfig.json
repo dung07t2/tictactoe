@@ -14,7 +14,11 @@
         "isolatedModules": true,
         "jsx": "preserve",
         "incremental": true,
-        "useUnknownInCatchVariables": false
+        "useUnknownInCatchVariables": false,
+        "baseUrl": "./",
+        "paths": {
+            "*": ["./src"]
+        }
     },
     "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
     "exclude": ["node_modules"]
