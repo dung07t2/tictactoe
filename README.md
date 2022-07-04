@@ -56,14 +56,29 @@ redux
 -   All redux logic are kept inside `redux` folder.
 -   All typescript interfaces are kept inside `types` and `types/interfaces` folder.
 
+### Features:
+
+-   Check the winner
+-   Persit previous steps even refresh page.
+-   Store all steps
+-   Testing with testing-library and jest
+-   Husky for checking pre-commit
+-   Circle Ci setup
+
 ### Prerequisites
 
--   Node - 16.2.0
--   Yarn - 1.22.17
+-   Node - 16.13.0
+-   Yarn - 1.22.18
 
 ### Installation
 
 1. git clone https://github.com/dung07t2/tictactoe-test.git
 2. cd tictactoe
 3. yarn dev
-4. navigate to localhost:3000 and start your development
+4. navigate to localhost:3005 and start your development
+
+### Deploy aws Ec2:
+
+-   CircleCI
+-   Ubuntu 22.04/nginx/Encrypt SSL/TLS Certificates
+-   Link: [Tictactoe](https://assignment.ray02r.com/)
